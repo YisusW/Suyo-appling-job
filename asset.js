@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	
+	
+	var matriz = [];
+	
 	activarEvents();
 });
 
@@ -120,7 +123,7 @@ function activar_event( id , id_form ){
                 
             }else{
                 
-                container[ container.length ] = $(this).val();
+                container[ container.length ] = { "type" : $(this).val() , 'number index' : index } ;
             }
         
             
@@ -130,5 +133,7 @@ function activar_event( id , id_form ){
          
          
     })
+    
+    matriz[ martiz.length ] = { 'container' : container  };
     
 }
