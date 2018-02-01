@@ -1,10 +1,12 @@
 $(document).ready(function() {
-	
-	
-	var matriz = [];
+    
+    
 	
 	activarEvents();
 });
+
+var matriz = [];
+
 
 function hiddemessageValidadtion (){
     
@@ -55,7 +57,7 @@ function activarEvents(){
             
             var type =   parseInt( $("#type_num").val() );
             
-            $('#add_continers').html('')
+            $('#add_continers').html('');
             
             for( var i =0 ; i < continer ; i ++  ){
                 
@@ -72,17 +74,19 @@ function activarEvents(){
                                                 '<div class="col">'+form+'</div>'+
                                                 
                                               '</div>'+
-                                            '</div></div>');
+                                            '</div></div><br>');
                 
                 activar_event( '#'+i+'_container' , '#'+i+'_form' )
             }
+        
+            $("#add_continers").append('<br> <button type="button" class="btn btn-success">Realizar Intercambio</button>');
+            
         }
         
 
         
     })
 }
-
 
 
 function hacerform(num , num_container ){
@@ -93,7 +97,9 @@ function hacerform(num , num_container ){
        
        concat +=  
              '<br><div id="type_form_group" class="form-group row">'+
+             
               '<label for="inputPassword3" class="col-sm-2 col-form-label">Types N # '+i+'</label>'+
+              
               '<div class="col-sm-10">'+
                 
                 '<input type="number" class="form-control" id="type_num'+i+'" placeholder="M">'+
@@ -101,6 +107,7 @@ function hacerform(num , num_container ){
                 '<div id="message_type" class="form-control-feedback"  style="display:none"></div>'+
                 
               '</div>'+
+              
             '</div>';
        
     }
@@ -134,6 +141,7 @@ function activar_event( id , id_form ){
          
     })
     
-    matriz[ martiz.length ] = { 'container' : container  };
+    matriz[ matriz.length ] = { 'container' : container  };
     
 }
+
