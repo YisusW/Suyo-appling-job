@@ -33,17 +33,38 @@ class Swap {
     
     private $total_types_containers ;
         
-        public function operaciones(){
+        public function examinar_totales( $container = array() ){
+        
+         $this->total_types_containers = false;
+         
+            $result = false;
             
+            foreach ( $container as $key => $value ){
+                
+                if(  $this->total_types_containers === false ){
+                    
+                    $this->total_types_containers = $value['total'];
+                    
+                }else{
+                    
+                    if( $this->total_types_containers <> $value['total'] ){
+                        $result = false;
+                    }else {
+                        $result = true;
+                    }                    
+                }
+            }   
+            
+            return $result ;
         }
         
         public function intercambio(){
             
         }
         
-        public function rectificar_capacidad_container (  $container = array() ){
+        public function agregar_total (  $container = array() ){
             
-            $this->$total_types_containers = 0 ;
+            $this->total_types_containers = 0 ;
              
             foreach ( $container as $key => $value ){
                 
@@ -51,29 +72,30 @@ class Swap {
                  
                     foreach( $value as $fila_cont ){
                         
-                        if( $this->$total_types_containers === 0 ){
-                            
-                            $this->$total_types_containers = (int) $fila_cont['cantidad'] + $this->$total_types_containers ;
-                            
-                        }else {
-                            
-                            
-                        }
-                        
-                       
+                            $this->total_types_containers = (int) $fila_cont['cantidad'] + $this->total_types_containers ;
                     }
                     
-                
-                
+                    $value['total'] = $this->total_types_containers;
+                    
+                    $this->total_types_containers = 0 ;
+                    
             }                
             
         }
         
         public function verificardisponibilidad(  $container = array() ){
             $auxiliar = array();
+            
             $result = false;
             
-            $this->rectificar_capacidad_container( $container );
+            $result = $this->agregar_total( $container );
+            
+            $result = $this->examinar_totales ( $result );
+            
+            if( $result == false ){
+                    
+                    echo json_encode( array( 'message' , 'El total de cantidad de cada container debe ser  igual! para mantener la cantidad de bolas en cada container.' ) );
+            }
             
             foreach ( $container as $key => $value ){
                 
