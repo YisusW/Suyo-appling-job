@@ -93,6 +93,7 @@ class Swap {
         }
         
         public function verificardisponibilidad(  $container = array() ){
+            
             $auxiliar = array();
             
             $result = false;
@@ -105,12 +106,14 @@ class Swap {
                     
                     echo json_encode( array( 'message' , 'El total de cantidad de cada container debe ser  igual! para mantener la cantidad de bolas en cada container.' ) );
             }
+            echo json_encode($container);
+            echo json_encode('---------');
             
             foreach ( $container as $key => $value ){
                 
                  
                  
-                if( $key+1 < count($container) ){
+                if( $key+1 <= count($container) ){
                     
                     //si existe una proxima
                     
@@ -130,25 +133,34 @@ class Swap {
                                
                                 // Verificar si ambos son mayores que cero para saber que se puede hacer una operacion
                                 
-                                
                                
                                if( (int) $fila_cont['cantidad'] > (int) $container[$key+1][$key]['cantidad'] ){
+                                
+
+                                  
+                                   $container[$key][$key]['cantidad'] = (int) $container[$key][$key]['cantidad'] - 1  ;// Agregar
+
+                                   $container[$key+1][$key]['cantidad'] =  (int) $container[$key+1][$key]['cantidad'] + 1  ;// Quitar
                                    
-                                   $array_base = $fila_cont;
-                                   echo json_encode( array($fila_cont , $container[$key+1]  ) );
-                                   //$this->intercambio( $array_base );// Agregar
-                                   //$this->intercambio( $array_base );// Quitar
+                                   $container[$key+1][$key+1]['cantidad'] =  (int) $container[$key+1][$key+1]['cantidad'] - 1  ;// Agregar
                                    
+                                   $container[$key][$key+1]['cantidad'] =  (int) $container[$key][$key+1]['cantidad'] + 1  ;// Quitar
+                                   
+
                                }else{
                                    
-                                   echo json_encode( array($fila_cont , $container[$key+1]   ) );
-                                   $array_base = $container[$key+1][$key];
+                                   (int)  $container[$key][$key]['cantidad'] = (int)  $container[$key][$key]['cantidad'] - 1  ;
+
+                                   (int) $container[$key+1][$key]['cantidad'] =  (int) $container[$key+1][$key]['cantidad'] + 1  ;// Quitar
                                    
-                                   //$this->intercambio( $array_base );
+                                   (int)  $container[$key+1][$key+1]['cantidad'] = (int)  $container[$key+1][$key+1]['cantidad'] - 1  ;
+
+                                   (int) $container[$key][$key+1]['cantidad'] =  (int) $container[$key][$key+1]['cantidad'] + 1  ;// Quitar                                   
+                                   
                                }
                                
                                
-                               $result = true;
+                               
                                
                            }
                        } 
@@ -158,6 +170,8 @@ class Swap {
                 }
                 
             }    
+            
+            echo json_encode($container);
             
             return $result;
             
