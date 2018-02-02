@@ -58,17 +58,16 @@ class Swap {
             return $result ;
         }
         
-        public function intercambio( $base ,  ){
+        // hacer declaracion de parametros con tipos de dato arrau()
+        // el sistema manda msg de error o Alerta de sintaxis 
+        public function intercambio( $base = array( ) , $reemplazos = array( ) ){
             
-            $reemplazos = array(0 => "piña", 4 => "cereza");
-            
-            $reemplazos2 = array(0 => "uva");
-            
-            $cesta = array_replace($base, $reemplazos, $reemplazos2);
+            $var  = array_replace($base, $reemplazos );
+           return $var;
             
         }
         
-        public function agregar_total (  $container = array() ){
+        public function agregar_total ( $container = array() ){
             
             $this->total_types_containers = 0 ;
             
@@ -109,36 +108,43 @@ class Swap {
             
             foreach ( $container as $key => $value ){
                 
-                 //echo json_encode(  'container ' . $key  );
                  
-                if( $key+1 === count($container)-1 ||  $key+1 < count($container)-1 ){
+                 
+                if( $key+1 < count($container) ){
                     
                     //si existe una proxima
                     
+                
                     foreach( $value as $fila_cont ){
                         
                         // recorrer el contenedor por tipo
                        
-                       if(  $fila_cont['index_type'] === $value[$key+1]['index_type'] ){
+                       if(  $fila_cont['index_type'] === $container[$key+1][$key]['index_type'] ){
                            
                            // Verificar si existe el mismo tipo en el otro  contenedor
                            
-                           //echo json_encode(  'type ' . $fila_cont['index_type']  );
-
-                           if( ( (int) $fila_cont['cantidad'] > 0 ) && ( (int) $value[$key+1]['cantidad'] > 0) ){
+                           //echo json_encode(   $fila_cont  );
+                          
+                          
+                           if( ( (int) $fila_cont['cantidad'] > 0 ) && ( (int) $container[$key+1][$key]['cantidad'] > 0) ){
                                
                                 // Verificar si ambos son mayores que cero para saber que se puede hacer una operacion
                                 
-                                //echo json_encode( 'cantidad ' . $fila_cont['cantidad']  );
+                                
                                
-                               if( (int) $fila_cont['cantidad'] > (int) $value[$key+1]['cantidad'] ){
+                               if( (int) $fila_cont['cantidad'] > (int) $container[$key+1][$key]['cantidad'] ){
                                    
                                    $array_base = $fila_cont;
+                                   echo json_encode( array($fila_cont , $container[$key+1]  ) );
+                                   //$this->intercambio( $array_base );// Agregar
+                                   //$this->intercambio( $array_base );// Quitar
                                    
                                }else{
                                    
-                                   $array_base = $value[$key+1];
+                                   echo json_encode( array($fila_cont , $container[$key+1]   ) );
+                                   $array_base = $container[$key+1][$key];
                                    
+                                   //$this->intercambio( $array_base );
                                }
                                
                                
