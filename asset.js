@@ -56,11 +56,15 @@ function activarEvents(){
             
             $('#add_continers').html('');
             
+            matriz = [] ;
+            
+            $('#add_continers').html('<div class="container">')
+            
             for( var i =0 ; i < continer ; i ++  ){
                 
                 form = hacerform( type , i );
  
-                $('#add_continers').append('<div class"row"><div class="card" >'+
+                $('#add_continers').append('<div class="card" >'+
                                               '<div class="card-header">'+
                                               
                                               '<h3 class="card-title">Container N# '+i+'</h3>'+
@@ -70,18 +74,24 @@ function activarEvents(){
                                                 
                                                 '<div class="col">'+form+'</div>'+
                                                 
-                                              '</div>'+
-                                            '</div></div><br>');
+                                              '</div></div><br>');
                 
                 activar_event( '#'+i+'_container' , '#'+i+'_form' )
             }
+            
+            $("#add_continers").append('</div>');
         
             $("#add_continers").append('<br> <button id="mandarform" type="button" class="btn btn-success">Realizar Intercambio</button>');
             
             
            $("#mandarform").click( function(){
                
-                mandar_formulario()
+                if( matriz.length == 0 ){
+                            
+                            alert( 'Debes fijar los valores de los  containers' );
+                }else{
+                     mandar_formulario()
+                }
                
            } );
         }
@@ -134,6 +144,7 @@ function activar_event( id , id_form ){
    
     $( id ).click( function (){
         
+        container = [];
         
         $( id_form ).find(':input').each( function ( index , item  ){
             
@@ -141,18 +152,15 @@ function activar_event( id , id_form ){
                 
             }else{
                 
-                container[ container.length ] = { "type" : $(this).val() , 'number index' : index } ;
+                container[ container.length ] = { "cantidad" : $(this).val() , 'index_type' : index } ;
             }
-        
             
         } );
         
          $(id_form).append('<input id="containervalue'+id_form+'" type="hidden" value="'+container+'" >')
          
-         
+         matriz[ matriz.length ] = container  ;
     })
-    
-    matriz[ matriz.length ] = { 'container' : container  };
     
 }
 
@@ -166,7 +174,7 @@ function mandar_formulario (){
     
          data    : { datos : matriz , form : true },
     
-         dataType: 'json'
+         dataType: 'HTML'
 
     }).done(function(data, textStatus, jqXHR) {
     	// because dataType is json 'data' is guaranteed to be an object
