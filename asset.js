@@ -182,6 +182,11 @@ function mandar_formulario (){
     	
     	console.log(data);
     	
+    	if( data.message ){
+    	    
+    	    alert( data.message );
+    	}
+    	
     }).fail(function(jqXHR, textStatus, errorThrown) {
     	// the response is not guaranteed to be json
     	

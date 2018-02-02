@@ -58,7 +58,13 @@ class Swap {
             return $result ;
         }
         
-        public function intercambio(){
+        public function intercambio( $base ,  ){
+            
+            $reemplazos = array(0 => "piña", 4 => "cereza");
+            
+            $reemplazos2 = array(0 => "uva");
+            
+            $cesta = array_replace($base, $reemplazos, $reemplazos2);
             
         }
         
@@ -124,6 +130,17 @@ class Swap {
                                 // Verificar si ambos son mayores que cero para saber que se puede hacer una operacion
                                 
                                 //echo json_encode( 'cantidad ' . $fila_cont['cantidad']  );
+                               
+                               if( (int) $fila_cont['cantidad'] > (int) $value[$key+1]['cantidad'] ){
+                                   
+                                   $array_base = $fila_cont;
+                                   
+                               }else{
+                                   
+                                   $array_base = $value[$key+1];
+                                   
+                               }
+                               
                                
                                $result = true;
                                
