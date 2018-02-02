@@ -1,7 +1,5 @@
 $(document).ready(function() {
     
-    
-	
 	activarEvents();
 });
 
@@ -17,7 +15,6 @@ function hiddemessageValidadtion (){
             $('#message_const').hide('FadeOut')
             
             /**/
-            
                         
             $('#const_form_group').removeClass('has-danger');
             
@@ -79,8 +76,14 @@ function activarEvents(){
                 activar_event( '#'+i+'_container' , '#'+i+'_form' )
             }
         
-            $("#add_continers").append('<br> <button type="button" class="btn btn-success">Realizar Intercambio</button>');
+            $("#add_continers").append('<br> <button id="mandarform" type="button" class="btn btn-success">Realizar Intercambio</button>');
             
+            
+           $("#mandarform").click( function(){
+               
+                mandar_formulario()
+               
+           } );
         }
         
 
@@ -112,7 +115,15 @@ function hacerform(num , num_container ){
        
     }
     
-    concat += '<button type="button" id="'+num_container+'_container" class="btn btn-outline-primary btn-block">Fijar tipos</button><br>'; 
+    concat += '<div class="form-group row">'+
+      '<div class="offset-sm-2 col-sm-10">'+
+        
+        ' <button type="button" id="'+num_container+'_container" class="btn btn-outline-primary ">Fijar tipos</button> '+
+        ' <button type="reset" class="btn btn-outline-secondary">Cancelar</button> '+
+        
+      '</div>'+
+     '</div>';
+
     
     return  concat+'</form>';
 }
@@ -145,3 +156,32 @@ function activar_event( id , id_form ){
     
 }
 
+function mandar_formulario (){
+    
+        $.ajax({
+    	url: 'Control.php',
+    	method: 'POST',
+    	data: { datos : matriz , form : true },
+    	// data: JSON.stringify({var:'val'}), // send data in the request body
+    	// contentType: "application/json; charset=utf-8",  // if sending in the request body
+    	dataType: 'json'
+    }).done(function(data, textStatus, jqXHR) {
+    	// because dataType is json 'data' is guaranteed to be an object
+    	console.log('done');
+    	
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+    	// the response is not guaranteed to be json
+    	
+    	if (jqXHR.responseJSON) {
+    		// jqXHR.reseponseJSON is an object
+    		console.log('failed with json data');
+    	}
+    	
+    	else {
+    		// jqXHR.responseText is not JSON data
+    		console.log('failed with unknown data'); 
+    	}
+    }).always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+    	console.log('always');
+    });
+}
