@@ -65,6 +65,8 @@ class Swap {
         public function agregar_total (  $container = array() ){
             
             $this->total_types_containers = 0 ;
+            
+            $result = array();
              
             foreach ( $container as $key => $value ){
                 
@@ -79,8 +81,10 @@ class Swap {
                     
                     $this->total_types_containers = 0 ;
                     
+                    $result[] = $value;
             }                
             
+            return $result;
         }
         
         public function verificardisponibilidad(  $container = array() ){
@@ -88,11 +92,11 @@ class Swap {
             
             $result = false;
             
-            $result = $this->agregar_total( $container );
+            $container_total = $this->agregar_total( $container );
             
-            $result = $this->examinar_totales ( $result );
+            $result_ecaminar = $this->examinar_totales( $container_total );
             
-            if( $result == false ){
+            if( $result_ecaminar == false ){
                     
                     echo json_encode( array( 'message' , 'El total de cantidad de cada container debe ser  igual! para mantener la cantidad de bolas en cada container.' ) );
             }
