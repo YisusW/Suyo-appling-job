@@ -3,9 +3,8 @@
     
     if ( isset( $_POST['form'] ) ){
         
-        $result = analice( $_POST );
+        $result = analice( $_POST['datos'] );
         
-        echo json_encode( array( 'message' , $result ) );
         
     }else {
         
@@ -17,15 +16,31 @@
         
         $result = null ;
         
+        $instance = new Swap();
+        
         foreach ($datos as $value) {
             // matriz des...
             
-            
+            echo json_encode( $value );
         }
-        
         
         return $result;
     }
     
+    
+class Swap {
+        
+        public function operaciones(){
+            
+        }
+        
+        public function intercambio(){
+            
+        }
+        
+        public function verificardisponibilidad(){
+            
+        }
+}
 
 ?>

@@ -159,15 +159,20 @@ function activar_event( id , id_form ){
 function mandar_formulario (){
     
         $.ajax({
-    	url: 'Control.php',
-    	method: 'POST',
-    	data: { datos : matriz , form : true },
-    	// data: JSON.stringify({var:'val'}), // send data in the request body
-    	// contentType: "application/json; charset=utf-8",  // if sending in the request body
-    	dataType: 'json'
+            
+         url     : 'Control.php',
+    
+         method  : 'POST',
+    
+         data    : { datos : matriz , form : true },
+    
+         dataType: 'json'
+
     }).done(function(data, textStatus, jqXHR) {
     	// because dataType is json 'data' is guaranteed to be an object
     	console.log('done');
+    	
+    	console.log(data);
     	
     }).fail(function(jqXHR, textStatus, errorThrown) {
     	// the response is not guaranteed to be json
@@ -182,6 +187,7 @@ function mandar_formulario (){
     		console.log('failed with unknown data'); 
     	}
     }).always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        
     	console.log('always');
     });
 }
